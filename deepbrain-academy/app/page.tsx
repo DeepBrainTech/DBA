@@ -1,4 +1,7 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import Image from 'next/image';
 import { 
   Calculator, 
   BookOpen, 
@@ -10,7 +13,8 @@ import {
   ArrowRight,
   MapPin,
   Menu,
-  Code
+  Code,
+  X
 } from 'lucide-react';
 
 // --- 数据部分: 课程列表 ---
@@ -20,58 +24,117 @@ const programs = [
     title: 'Mathematics Foundation',
     description: 'Build a strong calculation ability and logical thinking mindset essential for academic success.',
     icon: <Calculator className="w-8 h-8 text-blue-600" />,
-    color: 'bg-blue-50'
+    color: 'bg-blue-50',
+    disabled: true,
+    poster: null
   },
   {
     id: 'reading',
     title: 'Reading Program',
     description: 'Develop high-level reading ability and comprehension skills through diverse literary works.',
     icon: <BookOpen className="w-8 h-8 text-green-600" />,
-    color: 'bg-green-50'
+    color: 'bg-green-50',
+    disabled: true,
+    poster: null
   },
   {
     id: 'chess',
     title: 'Classical Chess',
     description: 'Master the timeless game of strategy. Enhance concentration, foresight, and tactical planning.',
     icon: <Crown className="w-8 h-8 text-purple-600" />,
-    color: 'bg-purple-50'
+    color: 'bg-purple-50',
+    disabled: false,
+    poster: '/chess.png'
   },
   {
     id: 'fog-chess',
     title: 'Fog of War Chess',
     description: 'Advanced strategy training. Navigate uncertainty and incomplete information in this dark chess variant.',
     icon: <EyeOff className="w-8 h-8 text-gray-700" />,
-    color: 'bg-gray-100'
+    color: 'bg-gray-100',
+    disabled: false,
+    poster: '/chess.png'
   },
   {
     id: 'go',
     title: 'Go (Weiqi)',
     description: 'Explore the profound complexity of Go. Develop big-picture thinking and deep strategic intuition.',
     icon: <CircleDot className="w-8 h-8 text-indigo-600" />,
-    color: 'bg-indigo-50'
+    color: 'bg-indigo-50',
+    disabled: false,
+    poster: '/go.png'
   },
   {
     id: 'pre-amc',
     title: 'Pre-AMC Math',
     description: 'Bridge the gap between school math and competition math. Perfect for grades 6-8.',
     icon: <TrendingUp className="w-8 h-8 text-orange-600" />,
-    color: 'bg-orange-50'
+    color: 'bg-orange-50',
+    disabled: false,
+    poster: '/pre_amc.png'
   },
   {
     id: 'amc',
     title: 'AMC Enrichment',
     description: 'Elite training for AMC 10/12. Focus on advanced problem-solving, combinatorics, and number theory.',
     icon: <Award className="w-8 h-8 text-red-600" />,
-    color: 'bg-red-50'
+    color: 'bg-red-50',
+    disabled: false,
+    poster: '/amc.png'
   },
   {
     id: 'coding',
     title: 'Coding Program',
     description: 'Master programming fundamentals and computational thinking. Build real-world projects and develop problem-solving skills through code.',
     icon: <Code className="w-8 h-8 text-teal-600" />,
-    color: 'bg-teal-50'
+    color: 'bg-teal-50',
+    disabled: false,
+    poster: '/coding.png'
   }
 ];
+
+// --- 组件: Modal 弹窗 ---
+const PosterModal = ({ isOpen, onClose, posterSrc, title }: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  posterSrc: string | null;
+  title: string;
+}) => {
+  if (!isOpen || !posterSrc) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 backdrop-blur-sm overflow-auto"
+      onClick={onClose}
+    >
+      <div 
+        className="relative my-8"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* 关闭按钮 */}
+        <button
+          onClick={onClose}
+          className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
+          aria-label="Close"
+        >
+          <X className="w-8 h-8" />
+        </button>
+        
+        {/* 海报图片 */}
+        <div className="relative bg-white rounded-lg overflow-hidden shadow-2xl">
+          <Image
+            src={posterSrc}
+            alt={title}
+            width={1200}
+            height={1600}
+            className="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain"
+            priority
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // --- 组件: 导航栏 ---
 const Navbar = () => (
@@ -150,45 +213,73 @@ const Hero = () => (
 );
 
 // --- 组件: 课程列表区域 ---
-const ProgramSection = () => (
-  <div id="programs" className="py-16 bg-gray-50">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center">
-        <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Our Curriculum</h2>
-        <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          Programs for Every Stage
-        </p>
-        <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-          We combine traditional academic foundations with advanced strategic games to build a complete intellect.
-        </p>
+const ProgramSection = () => {
+  const [selectedPoster, setSelectedPoster] = useState<{src: string; title: string} | null>(null);
+
+  const handleLearnMoreClick = (program: typeof programs[0]) => {
+    if (!program.disabled && program.poster) {
+      setSelectedPoster({ src: program.poster, title: program.title });
+    }
+  };
+
+  return (
+    <div id="programs" className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Our Curriculum</h2>
+          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            Programs for Every Stage
+          </p>
+          <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+            We combine traditional academic foundations with advanced strategic games to build a complete intellect.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {programs.map((program) => (
+            <div key={program.id} className="flex flex-col bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+              <div className={`p-6 ${program.color} flex justify-between items-start`}>
+                 {program.icon}
+              </div>
+              <div className="flex-1 p-6 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">{program.title}</h3>
+                  <p className="mt-3 text-base text-gray-500">
+                    {program.description}
+                  </p>
+                </div>
+                <div className="mt-6">
+                  {program.disabled ? (
+                    <span className="text-gray-400 font-medium flex items-center cursor-not-allowed">
+                      Learn more 
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </span>
+                  ) : (
+                    <button 
+                      onClick={() => handleLearnMoreClick(program)}
+                      className="text-blue-600 hover:text-blue-800 font-medium flex items-center group"
+                    >
+                      Learn more 
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {programs.map((program) => (
-          <div key={program.id} className="flex flex-col bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
-            <div className={`p-6 ${program.color} flex justify-between items-start`}>
-               {program.icon}
-            </div>
-            <div className="flex-1 p-6 flex flex-col justify-between">
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">{program.title}</h3>
-                <p className="mt-3 text-base text-gray-500">
-                  {program.description}
-                </p>
-              </div>
-              <div className="mt-6">
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium flex items-center group">
-                  Learn more 
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Modal 弹窗 */}
+      <PosterModal
+        isOpen={!!selectedPoster}
+        onClose={() => setSelectedPoster(null)}
+        posterSrc={selectedPoster?.src || null}
+        title={selectedPoster?.title || ''}
+      />
     </div>
-  </div>
-);
+  );
+};
 
 // --- 组件: 页脚 ---
 const Footer = () => (
