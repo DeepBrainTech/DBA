@@ -114,6 +114,8 @@ export default function Home() {
                     src="/Image (儿童学习场景).svg"
                     alt="儿童学习场景"
                     fill
+                    priority
+                    quality={75}
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -356,6 +358,7 @@ export default function Home() {
                 src="/Image (学习场景).svg"
                 alt="学习场景"
                 fill
+                loading="lazy"
                 className="object-cover"
               />
             </div>
@@ -478,6 +481,7 @@ export default function Home() {
                   src="/Image (成功案例).svg"
                   alt="成功案例"
                   fill
+                  loading="lazy"
                   className="object-cover"
                 />
               </div>
