@@ -100,6 +100,15 @@ const PosterModal = ({ isOpen, onClose, posterSrc, title }: {
   posterSrc: string | null;
   title: string;
 }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // 重置加载状态当海报变化时
+  React.useEffect(() => {
+    if (posterSrc) {
+      setImageLoaded(false);
+    }
+  }, [posterSrc]);
+
   if (!isOpen || !posterSrc) return null;
 
   return (
@@ -122,12 +131,26 @@ const PosterModal = ({ isOpen, onClose, posterSrc, title }: {
         
         {/* 海报图片 */}
         <div className="relative bg-white rounded-lg overflow-hidden shadow-2xl">
+          {/* 加载指示器 */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 min-w-[300px] min-h-[400px]">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-4 text-gray-600">Loading...</p>
+              </div>
+            </div>
+          )}
+          
           <Image
             src={posterSrc}
             alt={title}
             width={1200}
             height={1600}
-            className="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain"
+            className={`w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain transition-opacity duration-300 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            quality={90}
             priority
           />
         </div>
@@ -215,10 +238,30 @@ const Hero = () => (
 // --- 组件: 课程列表区域 ---
 const ProgramSection = () => {
   const [selectedPoster, setSelectedPoster] = useState<{src: string; title: string} | null>(null);
+  const [hasPreloaded, setHasPreloaded] = useState(false);
+
+  // 预加载所有海报图片
+  const preloadAllPosters = () => {
+    if (hasPreloaded) return;
+    
+    programs.forEach(program => {
+      if (!program.disabled && program.poster) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'image';
+        link.href = program.poster;
+        document.head.appendChild(link);
+      }
+    });
+    
+    setHasPreloaded(true);
+  };
 
   const handleLearnMoreClick = (program: typeof programs[0]) => {
     if (!program.disabled && program.poster) {
       setSelectedPoster({ src: program.poster, title: program.title });
+      // 首次点击时预加载其他海报
+      preloadAllPosters();
     }
   };
 
@@ -237,7 +280,11 @@ const ProgramSection = () => {
 
         <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {programs.map((program) => (
-            <div key={program.id} className="flex flex-col bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+            <div 
+              key={program.id} 
+              className="flex flex-col bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100"
+              onMouseEnter={() => !program.disabled && preloadAllPosters()}
+            >
               <div className={`p-6 ${program.color} flex justify-between items-start`}>
                  {program.icon}
               </div>
