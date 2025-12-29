@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   Calculator, 
   BookOpen, 
@@ -176,10 +177,13 @@ const Navbar = () => (
         <div className="hidden md:flex space-x-8 items-center">
           <a href="#" className="text-gray-600 hover:text-blue-600 font-medium">Programs</a>
           <a href="#" className="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
-          <a href="#" className="text-gray-600 hover:text-blue-600 font-medium">Locations</a>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition flex items-center">
+          <Link href="/location" className="text-gray-600 hover:text-blue-600 font-medium">Location</Link>
+          <Link 
+            href="/location"
+            className="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition flex items-center"
+          >
             Find a Center <MapPin className="ml-2 w-4 h-4" />
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -205,7 +209,7 @@ const Hero = () => (
               <span className="block text-blue-600 xl:inline">Deep Thinking</span>
             </h1>
             <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              Beyond standard tutoring. From Classical Chess to Advanced AMC Math, we cultivate the strategic minds of tomorrow through rigorous logic and creative problem-solving.
+              Beyond standard tutoring. From Classical Strategy games like Chess and Go to Math, from Literacy to Programing, we cultivate the strategic minds of tomorrow through rigorous logic and creative problem-solving.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <div className="rounded-md shadow">
@@ -350,14 +354,18 @@ const Footer = () => (
         <div>
           <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Contact</h3>
           <ul className="mt-4 space-y-4">
-            <li className="flex items-center"><MapPin className="w-5 h-5 mr-2 text-blue-500"/> Find a Center</li>
+            <li>
+              <Link href="/location" className="flex items-center text-base text-gray-300 hover:text-white">
+                <MapPin className="w-5 h-5 mr-2 text-blue-500"/> Find a Center
+              </Link>
+            </li>
             <li><a href="#" className="text-base text-gray-300 hover:text-white">Franchise Opportunities</a></li>
             <li><a href="#" className="text-base text-gray-300 hover:text-white">Careers</a></li>
           </ul>
         </div>
       </div>
       <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-        <p className="text-base text-gray-400">&copy; 2024 DeepBrain Academy. All rights reserved.</p>
+        <p className="text-base text-gray-400">&copy; 2025 DeepBrain Academy. All rights reserved.</p>
       </div>
     </div>
   </footer>
