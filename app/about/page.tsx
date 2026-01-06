@@ -95,10 +95,10 @@ const Footer = () => (
 // 统计数据组件
 const StatsSection = () => {
   const stats = [
-    { icon: <Users className="w-8 h-8 text-blue-600" />, value: '1000+', label: 'Students Enrolled' },
+    { icon: <Users className="w-8 h-8 text-blue-600" />, value: '1000+', label: 'Students Served' },
     { icon: <Award className="w-8 h-8 text-green-600" />, value: '95%', label: 'Success Rate' },
     { icon: <GraduationCap className="w-8 h-8 text-purple-600" />, value: '50+', label: 'Expert Instructors' },
-    { icon: <BookOpen className="w-8 h-8 text-orange-600" />, value: '8', label: 'Programs Offered' }
+    { icon: <BookOpen className="w-8 h-8 text-orange-600" />, value: '10+', label: 'Programs Offered' }
   ];
 
   return (
