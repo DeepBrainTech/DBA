@@ -76,8 +76,8 @@ const programs = [
   },
   {
     id: 'amc',
-    title: 'AMC Enrichment',
-    description: 'Elite training for AMC 10/12. Focus on advanced problem-solving, combinatorics, and number theory.',
+    title: 'AMC Program',
+    description: 'Elite AMC 8 foundation training. Focus on core problem-solving, logic, and contest readiness.',
     icon: <Award className="w-8 h-8 text-red-600" />,
     color: 'bg-red-50',
     disabled: false,
@@ -175,7 +175,7 @@ const Navbar = () => (
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
-          <a href="#" className="text-gray-600 hover:text-blue-600 font-medium">Programs</a>
+        <a href="#programs" className="text-gray-600 hover:text-blue-600 font-medium">Programs</a>
           <a href="#" className="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
           <Link href="/location" className="text-gray-600 hover:text-blue-600 font-medium">Location</Link>
           <Link 
@@ -227,14 +227,18 @@ const Hero = () => (
         </main>
       </div>
     </div>
-    {/* Placeholder for Hero Image - 右侧大图占位 */}
-    <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-100 flex items-center justify-center">
-        <div className="text-gray-400 text-center">
-           {/* 你可以在这里放入 <Image /> 组件 */}
-           <div className="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
-             <span className="text-9xl opacity-10">🧠</span>
-           </div>
-        </div>
+    {/* Hero Image - 右侧大脑展位图 */}
+    <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 flex items-center justify-center">
+      <div className="relative w-full h-full">
+        <Image
+          src="/math_child.png"
+          alt="Deep Thinking - Math Child"
+          fill
+          className="object-cover"
+          priority
+          quality={90}
+        />
+      </div>
     </div>
   </div>
 );
