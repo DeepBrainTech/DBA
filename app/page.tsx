@@ -176,7 +176,7 @@ const Navbar = () => (
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
         <a href="#programs" className="text-gray-600 hover:text-blue-600 font-medium">Programs</a>
-          <a href="#" className="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
+          <Link href="/about" className="text-gray-600 hover:text-blue-600 font-medium">About Us</Link>
           <Link href="/location" className="text-gray-600 hover:text-blue-600 font-medium">Location</Link>
           <Link 
             href="/location"
