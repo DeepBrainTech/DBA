@@ -15,7 +15,11 @@ import {
   MapPin,
   Menu,
   Code,
-  X
+  X,
+  Trophy,
+  Star,
+  Globe,
+  GraduationCap
 } from 'lucide-react';
 
 // --- 数据部分: 课程列表 ---
@@ -91,6 +95,42 @@ const programs = [
     color: 'bg-teal-50',
     disabled: false,
     poster: '/coding.png'
+  },
+  {
+    id: 'Math League',
+    title: 'Math League',
+    description: 'Math League is a long-established, nationwide U.S. math competition program serving elementary, middle, and high school students.',
+    icon: <Trophy className="w-8 h-8 text-yellow-600" />,
+    color: 'bg-yellow-50',
+    disabled: true,
+    poster: null
+  },
+  {
+    id: 'MOEMS',
+    title: 'MOEMS',
+    description: 'A well-established, nationwide U.S. math competition for elementary and middle school students that promotes logical thinking and problem-solving skills.',
+    icon: <Star className="w-8 h-8 text-blue-700" />,
+    color: 'bg-blue-100',
+    disabled: true,
+    poster: null
+  },
+  {
+    id: 'Spanish Program',
+    title: 'Spanish Program',
+    description: 'Develop listening, speaking, reading, and writing skills through practical communication and cultural exploration, from beginner to real-world use.',
+    icon: <Globe className="w-8 h-8 text-pink-600" />,
+    color: 'bg-pink-50',
+    disabled: true,
+    poster: null
+  },
+  {
+    id: 'ESL Program',
+    title: 'ESL Program',
+    description: 'Designed for non-native English speakers to build strong listening, speaking, reading, and writing skills for academic and everyday communication.',
+    icon: <GraduationCap className="w-8 h-8 text-cyan-600" />,
+    color: 'bg-cyan-50',
+    disabled: false,
+    poster: '/ESL.png'
   }
 ];
 
