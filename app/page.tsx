@@ -26,7 +26,7 @@ import {
 const programs = [
   {
     id: 'math',
-    title: 'Mathematics Foundation',
+    title: 'Mental Math',
     description: 'Build a strong calculation ability and logical thinking mindset essential for academic success.',
     icon: <Calculator className="w-8 h-8 text-blue-600" />,
     color: 'bg-blue-50',
