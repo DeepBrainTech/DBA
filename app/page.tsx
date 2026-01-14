@@ -308,7 +308,7 @@ const ProgramSection = () => {
   const handleLearnMoreClick = (program: typeof programs[0]) => {
     if (program.disabled) {
       // 对于disabled的program，跳转到Google表单
-      window.open('https://docs.google.com/forms/d/15cX7NUtR4T_DXA9zk_9e5U-wXu6t-qncOJaKqFsl8o0', '_blank');
+      window.open('https://forms.gle/2mMzKoQkXHa2CVHe6', '_blank');
     } else if (program.poster) {
       // 对于有poster的program，显示海报
       setSelectedPoster({ src: program.poster, title: program.title });
