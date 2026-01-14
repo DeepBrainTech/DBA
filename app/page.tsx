@@ -306,7 +306,11 @@ const ProgramSection = () => {
   };
 
   const handleLearnMoreClick = (program: typeof programs[0]) => {
-    if (!program.disabled && program.poster) {
+    if (program.disabled) {
+      // 对于disabled的program，跳转到Google表单
+      window.open('https://docs.google.com/forms/d/15cX7NUtR4T_DXA9zk_9e5U-wXu6t-qncOJaKqFsl8o0', '_blank');
+    } else if (program.poster) {
+      // 对于有poster的program，显示海报
       setSelectedPoster({ src: program.poster, title: program.title });
       // 首次点击时预加载其他海报
       preloadAllPosters();
@@ -344,20 +348,13 @@ const ProgramSection = () => {
                   </p>
                 </div>
                 <div className="mt-6">
-                  {program.disabled ? (
-                    <span className="text-gray-400 font-medium flex items-center cursor-not-allowed">
-                      Learn more 
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </span>
-                  ) : (
-                    <button 
-                      onClick={() => handleLearnMoreClick(program)}
-                      className="text-blue-600 hover:text-blue-800 font-medium flex items-center group"
-                    >
-                      Learn more 
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  )}
+                  <button 
+                    onClick={() => handleLearnMoreClick(program)}
+                    className="text-blue-600 hover:text-blue-800 font-medium flex items-center group"
+                  >
+                    Learn more 
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
