@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, Navigation, ExternalLink } from 'lucide-react';
 
 // 地址信息
@@ -34,8 +35,14 @@ const Navbar = () => (
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-              <span className="text-white font-bold text-xl">D</span>
+            <div className="relative w-10 h-10 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+              <Image 
+                src="/logo.png" 
+                alt="DeepBrain Academy Logo" 
+                fill
+                className="object-contain"
+                sizes="40px"
+              />
             </div>
             <span className="font-bold text-2xl text-gray-800 tracking-tight">DeepBrain Academy</span>
           </Link>
